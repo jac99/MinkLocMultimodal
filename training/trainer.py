@@ -17,7 +17,7 @@ from eval.evaluate import evaluate, print_eval_stats
 from misc.utils import MinkLocParams, get_datetime
 from models.loss import make_loss
 from models.model_factory import model_factory
-from models.minkloc_rgb import MinkLocRGB
+from models.minkloc_multimodal import MinkLocMultimodal
 
 
 VERBOSE = False
@@ -101,7 +101,7 @@ def do_train(dataloaders, params: MinkLocParams, debug=False, visualize=False):
     loss_fn = make_loss(params)
 
     params_l = []
-    if isinstance(model, MinkLocRGB):
+    if isinstance(model, MinkLocMultimodal):
         # Different LR for image feature extractor (pretrained ResNet)
         if model.image_fe is not None:
             params_l.append({'params': model.image_fe.parameters(), 'lr': params.image_lr})

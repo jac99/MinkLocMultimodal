@@ -72,7 +72,7 @@ def make_collate_fn(dataset: OxfordDataset, mink_quantization_size=None):
                 # Apply the same transformation on all dataset elements
                 clouds = dataset.set_transform(clouds)
 
-            coords = [ME.utils.sparse_quantize(coords=e, quantization_size=mink_quantization_size)
+            coords = [ME.utils.sparse_quantize(coordinates=e, quantization_size=mink_quantization_size)
                       for e in clouds]
             coords = ME.utils.batched_coordinates(coords)
             # Assign a dummy feature equal to 1 to each point

@@ -11,7 +11,7 @@ import MinkowskiEngine as ME
 from models.minkloc import MinkLoc
 
 
-class MinkLocRGB(torch.nn.Module):
+class MinkLocMultimodal(torch.nn.Module):
     def __init__(self, cloud_fe, cloud_fe_size, image_fe, image_fe_size, output_dim: int,
                  fuse_method: str = 'concat', dropout_p: float = None, final_block: str = None):
         # cloud_fe: cloud feature extractor, returns tensor(batch_size, cloud_fe_size)
@@ -107,7 +107,7 @@ class MinkLocRGB(torch.nn.Module):
         return y
 
     def print_info(self):
-        print('Model class: MinkLocRGB')
+        print('Model class: MinkLocMultimodal')
         n_params = sum([param.nelement() for param in self.parameters()])
         print('Total parameters: {}'.format(n_params))
         if self.cloud_fe is not None:
@@ -269,30 +269,3 @@ class GeM(nn.Module):
 
     def forward(self, x):
         return nn.functional.avg_pool2d(x.clamp(min=self.eps).pow(self.p), (x.size(-2), x.size(-1))).pow(1./self.p)
-
-
-if __name__ == '__main__':
-    print('test')
-    cloud_fe_size = 128
-    cloud_fe = MinkLoc(in_channels=1, feature_size=cloud_fe_size, output_dim=cloud_fe_size,
-                       planes=[1, 1, 1], layers=[32, 64, 64], num_top_down=1,
-                       conv0_kernel_size=5, block='ECABasicBlock', pooling_method='GeM')
-
-    image_fe_size = 128
-    image_fe = ResnetFPN(out_channels=image_fe_size, lateral_dim=image_fe_size,
-                         fh_num_bottom_up=5, fh_num_top_down=0, add_fc_block=False)
-    model = MinkLocRGB(cloud_fe, cloud_fe_size, image_fe, image_fe_size, output_dim=256,
-                       dropout_p=None, add_fc_block=False)
-    model.print_info()
-
-    n = 4096
-    features = torch.ones((n, 1), dtype=torch.float)
-    coords = torch.rand((n, 3), dtype=torch.float)
-    coords, features = ME.utils.sparse_quantize(coords=coords, feats=features, quantization_size=0.01)
-    batched_coords, batched_features = ME.utils.sparse_collate(coords=[coords], feats=[features])
-    images = torch.randn((1, 3, 640, 480))
-
-    batch = {'features': batched_features, 'coords': batched_coords, 'images': images}
-    y = model(batch)
-    print(y)
-    print(y.shape)

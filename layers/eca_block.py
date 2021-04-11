@@ -30,7 +30,8 @@ class ECALayer(nn.Module):
         y = self.sigmoid(y)
         # y is (batch_size, channels) tensor
 
-        y_sparse = ME.SparseTensor(y, coords_manager=y_sparse.coords_man, coords_key=y_sparse.coords_key)
+        y_sparse = ME.SparseTensor(y, coordinate_manager=y_sparse.coordinate_manager,
+                                   coordinate_map_key=y_sparse.coordinate_map_key)
         # y must be features reduced to the origin
         return self.broadcast_mul(x, y_sparse)
 

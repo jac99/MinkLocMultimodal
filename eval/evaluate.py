@@ -128,7 +128,7 @@ def get_latent_vectors(model, set, device, params):
             # coords are (n_clouds, num_points, channels) tensor
             batch = {}
             if params.use_cloud:
-                coords = ME.utils.sparse_quantize(coords=x['coords'],
+                coords = ME.utils.sparse_quantize(coordinates=x['coords'],
                                                   quantization_size=params.model_params.mink_quantization_size)
                 bcoords = ME.utils.batched_coordinates([coords])
                 # Assign a dummy feature equal to 1 to each point

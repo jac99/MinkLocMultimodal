@@ -168,9 +168,7 @@ def image4lidar(filename, image_path, image_ext, lidar2image_ndx, k=None):
 
     image_ts = random.choice(lidar2image_ndx[lidar_ts][:k])
     image_file_path = os.path.join(image_path, traversal, str(image_ts) + image_ext)
-    #image_file_path = '/media/sf_Datasets/images4lidar/2014-05-19-13-20-57/1400505893134088.png'
-    #assert os.path.exists(image_file_path), 'Cannot find image: {}'.format(image_file_path)
-
+    image_file_path = '/media/sf_Datasets/images4lidar/2014-05-19-13-20-57/1400505893134088.png'
     img = Image.open(image_file_path)
     return img
 
