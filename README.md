@@ -148,16 +148,16 @@ python evaluate.py --config ../config/config_refined.txt --model_config ../model
 
 ### Multimodal model (3D+RGB) trained on the Baseline Dataset extended with RGB images
 
-| Method         | Oxford  | 
-| ------------------ |-------|
-| CORAL  |     96.1     |   
-| PIC-Net  |     98.2   |  
-| **MinkLoc++ (our)**  | 99.1 |      
+| Method         | Oxford (AR@1) | Oxford (AR@1\%) 
+| ---------------|-------|
+| CORAL  | 88.9 | 96.1 |   
+| PIC-Net  |     | 98.2   |  
+| **MinkLoc++ (our)**  | 96.5 | 99.1 |      
 
 ### Unimodal model (3D only) trained on the Baseline Dataset
 
-| Method         | Oxford  | U.S. | R.A. | B.D |
-| ------------------ |---------------- | -------------- |---|---|
+| Method         | Oxford (AR@1\%) | U.S. (AR@1\%) | R.A. (AR@1\%) | B.D (AR@1\%) |
+| ------------------|----------------|--------------|------|------|
 | PointNetVLAD [1] |     80.3     |   72.6 | 60.3 | 65.3 |
 | PCAN [2] |     83.8     |   79.1 | 71.2 | 66.8 |
 | DAGC [3] |     87.5     |   83.5 | 75.7 | 71.2 |
@@ -170,14 +170,15 @@ python evaluate.py --config ../config/config_refined.txt --model_config ../model
 
 ### Unimodal model (3D only) trained on the Refined Dataset
 
-| Method         | Oxford  | U.S. | R.A. | B.D |
+| Method         | Oxford  (AR@1\%) | U.S. (AR@1\%) | R.A. (AR@1\%) | B.D (AR@1\%) |
 | ------------------ |---------------- | -------------- |---|---|
 | PointNetVLAD [1] |     80.1     |   94.5 | 93.1 | 86.5 |
 | PCAN [2] |     86.4     |   94.1 | 92.3 | 87.0 |
 | DAGC [3] |     87.8     |   94.3 | 93.4 | 88.5 |
 | LPD-Net [4] |     94.9     |   98.9 | 96.4 | 94.4 |
 | SOE-Net [6] |     96.4   |   **97.7** | 95.9 | 92.6 |
-| **MinkLoc++ (RGB-only)**  |     **98.5**     |   **99.7** | **99.3** | **96.7** |
+| MinkLoc3D  |     **98.5**     |   **99.7** | **99.3** | **96.7** |
+| **MinkLoc++ (RGB-only)**  |          |    |  |  |
 
 
 1. M. A. Uy and G. H. Lee, "PointNetVLAD: Deep Point Cloud Based Retrieval for Large-Scale Place Recognition," 2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)
