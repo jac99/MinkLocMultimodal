@@ -99,7 +99,7 @@ Default limits requires 11GB of GPU RAM.
 
 To train the multimodal model (3D+RGB), run:
 
-```train baseline
+```train multimodal (3D+RGB) model
 cd training
 
 python train.py --config ../config/config_baseline_multimodal.txt --model_config ../models/minklocmultimodal.txt
@@ -107,13 +107,13 @@ python train.py --config ../config/config_baseline_multimodal.txt --model_config
 
 To train a unimodal model (3D only) model run:
 
-```train baseline
+```
 cd training
 
-# To train minkloc3d model on the Baseline Dataset
+# Train unimodal (3D only) model on the Baseline Dataset
 python train.py --config ../config/config_baseline.txt --model_config ../models/minkloc3d.txt
 
-# To train minkloc3d model on the Refined Dataset
+# Train unimodal (3D only) model on the Refined Dataset
 python train.py --config ../config/config_refined.txt --model_config ../models/minkloc3d.txt
 ```
 
