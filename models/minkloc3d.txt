@@ -1,0 +1,4 @@
+# MinkLoc3D model
+[MODEL]
+model = MinkLoc3D
+mink_quantization_size = 0.01
