@@ -1,6 +1,6 @@
 # MinkLoc++: Lidar and Monocular Image Fusion for Place Recognition
 
-Paper: [MinkLoc++: Lidar and Monocular Image Fusion for Place Recognition](http://) IJCNN 2021
+Paper: [MinkLoc++: Lidar and Monocular Image Fusion for Place Recognition](http://) accepted for IJCNN 2021
 
 [Jacek Komorowski](mailto:jacek.komorowski@pw.edu.pl), Monika Wysoczańska, Tomasz Trzciński
 
@@ -192,7 +192,7 @@ python evaluate.py --config ../config/config_refined.txt --model_config ../model
 9. J. Komorowski, "MinkLoc3D: Point Cloud Based Large-Scale Place Recognition", Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV), (2021)
 10. Z. Zhou et al., "NDT-Transformer: Large-scale 3D Point Cloud Localisation Using the Normal Distribution Transform Representation", 
    2021 IEEE International Conference on Robotics and Automation (ICRA)
-* J. Komorowski, M. Wysoczanska, T. Trzcinski, "MinkLoc++: Lidar and Monocular Image Fusion for Place Recognition", Xxxxxx (IJCNN), (2021)
+* J. Komorowski, M. Wysoczanska, T. Trzcinski, "MinkLoc++: Lidar and Monocular Image Fusion for Place Recognition", accepted for International Joint Conference on Neural Networks (IJCNN), (2021)
 
 ### License
 Our code is released under the MIT License (see LICENSE file for details).
