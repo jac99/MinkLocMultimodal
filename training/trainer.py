@@ -178,8 +178,7 @@ def do_train(dataloaders, params: MinkLocParams, debug=False, visualize=False):
                 if debug and count_batches > 2:
                     break
 
-                # Move everything to the device except 'coords' which must stay on CPU
-                batch = {e: batch[e].to(device) if e != 'coords' else batch[e] for e in batch}
+                batch = {e: batch[e].to(device) for e in batch}
 
                 positives_mask = batch['positives_mask']
                 negatives_mask = batch['negatives_mask']

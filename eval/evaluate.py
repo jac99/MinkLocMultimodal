@@ -130,9 +130,8 @@ def get_latent_vectors(model, set, device, params):
             if params.use_cloud:
                 coords = ME.utils.sparse_quantize(coordinates=x['coords'],
                                                   quantization_size=params.model_params.mink_quantization_size)
-                bcoords = ME.utils.batched_coordinates([coords])
+                bcoords = ME.utils.batched_coordinates([coords]).to(device)
                 # Assign a dummy feature equal to 1 to each point
-                # Coords must be on CPU, features can be on GPU - see MinkowskiEngine documentation
                 feats = torch.ones((bcoords.shape[0], 1), dtype=torch.float32).to(device)
                 batch['coords'] = bcoords
                 batch['features'] = feats
