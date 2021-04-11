@@ -163,9 +163,9 @@ python evaluate.py --config ../config/config_refined.txt --model_config ../model
 | DAGC [3] |     87.5     |   83.5 | 75.7 | 71.2 |
 | LPD-Net [4] |     94.9   |   96.0 | 90.5 | **89.1** |
 | EPC-Net [5] |     94.7   |   **96.5** | 88.6 | 84.9 |
-| SOE-Net [6] |     96.4   |   93.2 | **91.5** | 88.5 |
+| SOE-Net [6] |     96.4   |   93.2 | 91.5 | 88.5 |
 | MinkLoc3D  |     97.9     |   95.0 | 91.2 | 88.5 |
-| MinkLoc++ (RGB-only)  |     **98.3**     |    |  |  |
+| MinkLoc++ (RGB-only) |     **98.2** |  94.5  | **92.1** | 88.4 |
 
 
 ### Unimodal model (3D only) trained on the Refined Dataset
