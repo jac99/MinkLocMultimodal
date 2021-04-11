@@ -60,7 +60,7 @@ Extract the folder in the same directory as the project code. Thus, in that dire
 
 RGB images are taken directly from Oxford RobotCar dataset. 
 First, you need to download stereo camera images from Oxford RobotCar dataset and then
-run ```generate_rg_for_lidar.py``` script that finds 20 closest RGB images for each 3D point cloud and saves them in the 
+run ```generate_rgb_for_lidar.py``` script that finds 20 closest RGB images for each 3D point cloud and saves them in the 
 target directory. 
 During the training an input to the network consists of a 3D point cloud and one RGB image randomly chosen 
 from these 20 corresponding images.
@@ -84,13 +84,28 @@ python generate_test_sets.py
 ```
 
 ### Training
-To train **MinkLoc++** network, download and decompress the dataset and generate training pickles as described above.
-Edit the configuration file (`config_baseline.txt` or `config_refined.txt`). 
-Set `dataset_folder` parameter to the dataset root folder.
-Modify `batch_size_limit` parameter depending on available GPU memory. 
-Default limit (=256) requires at least 11GB of GPU RAM.
+To train **MinkLoc++** network, download and decompress the 3D point cloud dataset and generate training pickles as described above.
+To train the multimodal model (3D+RGB) download the original Oxford RobotCar dataset 
+and extract RGB images corresponding to 3D point clouds as described above.
+Edit the configuration files:
+- `config_baseline_multimodal.txt` when training a multimodal (3D+RGB) model 
+- `config_baseline.txt` and `config_refined.txt` when train unimodal (3D only) model
 
-To train the network, run:
+Set `dataset_folder` parameter to the dataset root folder.
+Set `dataset_folder` parameter to the path with RGB images corresponding to 3D point clouds, extracted from 
+Oxford RobotCar dataset (only when training a multimodal model).
+Modify `batch_size_limit` parameter depending on the available GPU memory. 
+Default limits requires 11GB of GPU RAM.
+
+To train the multimodal model (3D+RGB), run:
+
+```train baseline
+cd training
+
+python train.py --config ../config/config_baseline_multimodal.txt --model_config ../models/minklocmultimodal.txt
+```
+
+To train a unimodal model (3D only) model run:
 
 ```train baseline
 cd training
@@ -102,12 +117,13 @@ python train.py --config ../config/config_baseline.txt --model_config ../models/
 python train.py --config ../config/config_refined.txt --model_config ../models/minkloc3d.txt
 ```
 
+
 ### Pre-trained Models
 
 Pretrained models are available in `weights` directory
-- `minkloc_multimodal.pth` 3D+RGB model trained on the Baseline Dataset with corresponding RGB images 
-- `minkloc3d_baseline.pth` 3D model trained on the Baseline Dataset 
-- `minkloc3d_refined.pth` 3D model trained on the Refined Dataset 
+- `minkloc_multimodal.pth` multimodal model (3D+RGB) trained on the Baseline Dataset with corresponding RGB images 
+- `minkloc3d_baseline.pth` unimodal model (3D only) trained on the Baseline Dataset 
+- `minkloc3d_refined.pth` unimodal model (3D only) trained on the Refined Dataset 
 
 ### Evaluation
 
@@ -116,18 +132,29 @@ To evaluate pretrained models run the following commands:
 ```eval baseline
 cd eval
 
-# To evaluate the model trained on the Baseline Dataset
+# To evaluate the multimodal model (3D+RGB only)
+python evaluate.py --config ../config/config_baseline_multimodal.txt --model_config ../models/minklocmultimodal.txt --weights ../weights/minklocmultimodal.pth
+
+# To evaluate the unimodal model (3D only) trained on the Baseline Dataset
 python evaluate.py --config ../config/config_baseline.txt --model_config ../models/minkloc3d.txt --weights ../weights/minkloc3d_baseline.pth
 
-# To evaluate the model trained on the Refined Dataset
+# To evaluate the unimodal model (3D only) trained on the Refined Dataset
 python evaluate.py --config ../config/config_refined.txt --model_config ../models/minkloc3d.txt --weights ../weights/minkloc3d_refined.pth
 ```
 
 ## Results
 
-**MinkLoc++** performance (measured by Average Recall@1\%) compared to state-of-the-art:
+**MinkLoc++** performance (measured by Average Recall@1\%) compared to the state of the art:
 
-### Trained on Baseline Dataset
+### Multimodal model (3D+RGB) trained on the Baseline Dataset extended with RGB images
+
+| Method         | Oxford  | 
+| ------------------ |-------|
+| CORAL  |     96.1     |   
+| PIC-Net  |     98.2   |  
+| **MinkLoc++ (our)**  | 99.1 |      
+
+### Unimodal model (3D only) trained on the Baseline Dataset
 
 | Method         | Oxford  | U.S. | R.A. | B.D |
 | ------------------ |---------------- | -------------- |---|---|
@@ -141,7 +168,7 @@ python evaluate.py --config ../config/config_refined.txt --model_config ../model
 | MinkLoc++ (RGB-only)  |     **98.3**     |    |  |  |
 
 
-### Trained on Refined Dataset
+### Unimodal model (3D only) trained on the Refined Dataset
 
 | Method         | Oxford  | U.S. | R.A. | B.D |
 | ------------------ |---------------- | -------------- |---|---|
@@ -152,14 +179,6 @@ python evaluate.py --config ../config/config_refined.txt --model_config ../model
 | SOE-Net [6] |     96.4   |   **97.7** | 95.9 | 92.6 |
 | **MinkLoc++ (RGB-only)**  |     **98.5**     |   **99.7** | **99.3** | **96.7** |
 
-
-### Trained on 3D point cloud + RGB
-
-| Method         | Oxford  | 
-| ------------------ |-------|
-| CORAL  |     96.1     |   
-| PIC-Net  |     98.2   |  
-| **MinkLoc++ (our)**  | 99.1 |      
 
 1. M. A. Uy and G. H. Lee, "PointNetVLAD: Deep Point Cloud Based Retrieval for Large-Scale Place Recognition," 2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)
 2. W. Zhang and C. Xiao, "PCAN: 3D Attention Map Learning Using Contextual Information for Point Cloud Based Retrieval," 2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)
