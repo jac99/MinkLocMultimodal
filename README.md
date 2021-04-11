@@ -2,7 +2,7 @@
 
 Paper: [MinkLoc++: Lidar and Monocular Image Fusion for Place Recognition](http://) IJCNN 2021
 
-[Jacek Komorowski](mailto:jacek.komorowski@pw.edu.pl)
+[Jacek Komorowski](mailto:jacek.komorowski@pw.edu.pl), Monika Wysoczańska, Tomasz Trzciński
 
 Warsaw University of Technology
 
