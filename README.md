@@ -164,6 +164,7 @@ python evaluate.py --config ../config/config_refined.txt --model_config ../model
 | LPD-Net [6] |     94.9   |   96.0 | 90.5 | **89.1** |
 | EPC-Net [7] |     94.7   |   **96.5** | 88.6 | 84.9 |
 | SOE-Net [8] |     96.4   |   93.2 | 91.5 | 88.5 |
+| NDT-Transformer [10] | 97.7 | | | |
 | MinkLoc3D [9] |     97.9     |   95.0 | 91.2 | 88.5 |
 | **MinkLoc++ (3D-only)** |   **98.2** |  94.5  | **92.1** | 88.4 |
 
@@ -189,7 +190,8 @@ python evaluate.py --config ../config/config_refined.txt --model_config ../model
 7. L. Hui et al., "Efficient 3D Point Cloud Feature Learning for Large-Scale Place Recognition" preprint arXiv:2101.02374 (2021)
 8. Y. Xia et al., "SOE-Net: A Self-Attention and Orientation Encoding Network for Point Cloud based Place Recognition" preprint arXiv:2011.12430 (2020)
 9. J. Komorowski, "MinkLoc3D: Point Cloud Based Large-Scale Place Recognition", Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV), (2021)
-
+10. Z. Zhou et al., "NDT-Transformer: Large-scale 3D Point Cloud Localisation Using the Normal Distribution Transform Representation", 
+   2021 IEEE International Conference on Robotics and Automation (ICRA)
 * J. Komorowski, M. Wysoczanska, T. Trzcinski, "MinkLoc++: Lidar and Monocular Image Fusion for Place Recognition", Xxxxxx (IJCNN), (2021)
 
 ### License
