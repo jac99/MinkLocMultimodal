@@ -41,7 +41,7 @@ The following Python packages are required:
 
 Modify the `PYTHONPATH` environment variable to include absolute path to the project root folder: 
 ```export PYTHONPATH
-export PYTHONPATH=$PYTHONPATH:/home/.../MinkLoc3D
+export PYTHONPATH=$PYTHONPATH:/home/.../MinkLocMultimodal
 ```
 
 ### Datasets
@@ -60,7 +60,7 @@ Extract the folder in the same directory as the project code. Thus, in that dire
 
 RGB images are taken directly from Oxford RobotCar dataset. 
 First, you need to download stereo camera images from Oxford RobotCar dataset.
-See dataset website for details ([link](https://robotcar-dataset.robots.ox.ac.uk).
+See dataset website for details ([link](https://robotcar-dataset.robots.ox.ac.uk)).
 After downloading the dataset, run ```generate_rgb_for_lidar.py``` script that finds 20 closest RGB images in RobotCar 
 dataset for each 3D point cloud and saves them in the target directory. 
 During the training an input to the network consists of a 3D point cloud and one RGB image randomly chosen 
