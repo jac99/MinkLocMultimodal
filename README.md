@@ -131,11 +131,11 @@ Pretrained models are available in `weights` directory
 
 To evaluate pretrained models run the following commands:
 
-```eval baseline
+```
 cd eval
 
-# To evaluate the multimodal model (3D+RGB only)
-python evaluate.py --config ../config/config_baseline_multimodal.txt --model_config ../models/minklocmultimodal.txt --weights ../weights/minklocmultimodal.pth
+# To evaluate the multimodal model (3D+RGB only) trained on the Baseline Dataset
+python evaluate.py --config ../config/config_baseline_multimodal.txt --model_config ../models/minklocmultimodal.txt --weights ../weights/minklocmultimodal_baseline.pth
 
 # To evaluate the unimodal model (3D only) trained on the Baseline Dataset
 python evaluate.py --config ../config/config_baseline.txt --model_config ../models/minkloc3d.txt --weights ../weights/minkloc3d_baseline.pth
