@@ -154,7 +154,7 @@ python evaluate.py --config ../config/config_refined.txt --model_config ../model
 |---------------|-------|-------|
 | CORAL [1] | 88.9 | 96.1 |   
 | PIC-Net [2] |     | 98.2   |  
-| **MinkLoc++ (3D+RGB)**  | 96.5 | 99.1 |      
+| **MinkLoc++ (3D+RGB)**  | 96.7 | 99.1 |      
 
 ### Unimodal model (3D only) trained on the Baseline Dataset
 
