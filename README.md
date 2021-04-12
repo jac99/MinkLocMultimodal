@@ -47,8 +47,8 @@ export PYTHONPATH=$PYTHONPATH:/home/.../MinkLoc3D
 ### Datasets
 
 **MinkLoc++** is a multimodal descriptor based on two inputs:
-- a 3D point cloud constructed by aggregating multiple 2D LiDAR scans from Oxford RobotCar dataset 
-- a corresponding RGB image from the stereo-center camera 
+- a 3D point cloud constructed by aggregating multiple 2D LiDAR scans from Oxford RobotCar dataset, 
+- a corresponding RGB image from the stereo-center camera.
 
 We use 3D point clouds built by authors of *PointNetVLAD: Deep Point Cloud Based Retrieval for Large-Scale Place Recognition* paper ([link](https://arxiv.org/pdf/1804.03492)).
 Each point cloud is built by aggregating 2D LiDAR scans during the 20 meter vehicle traversal.
@@ -56,19 +56,20 @@ For details see PointNetVLAD paper or their github repository ([link](https://gi
 You can download training and evaluation point clouds from 
 [here](https://drive.google.com/open?id=1rflmyfZ1v9cGGH0RL4qXRrKhg-8A-U9q) 
 ([alternative link](https://drive.google.com/file/d/1-1HA9Etw2PpZ8zHd3cjrfiZa8xzbp41J/view?usp=sharing)). 
-Extract the folder in the same directory as the project code. Thus, in that directory you must have two folders: 1) benchmark_datasets and 2) MinkLoc3DRGB.
+Extract the folder in the same directory as the project code. Thus, in that directory you must have two folders: 1) benchmark_datasets and 2) MinkLocMultimodal.
 
 RGB images are taken directly from Oxford RobotCar dataset. 
-First, you need to download stereo camera images from Oxford RobotCar dataset and then
-run ```generate_rgb_for_lidar.py``` script that finds 20 closest RGB images for each 3D point cloud and saves them in the 
-target directory. 
+First, you need to download stereo camera images from Oxford RobotCar dataset.
+See dataset website for details ([link](https://robotcar-dataset.robots.ox.ac.uk).
+After downloading the dataset, run ```generate_rgb_for_lidar.py``` script that finds 20 closest RGB images in RobotCar 
+dataset for each 3D point cloud and saves them in the target directory. 
 During the training an input to the network consists of a 3D point cloud and one RGB image randomly chosen 
 from these 20 corresponding images.
 During the evaluation, a network input consists of a 3D point cloud and one RGB image with the closest timestamp.
 
 Before the network training or evaluation, run the below code to generate training pickles (with positive and negative point 
 clouds for each anchor point cloud) and evaluation pickles. The procedure for generating training and 
-evaluation pickles is the same as proposed in PointNetVLAD paper. 
+evaluation pickles is the same as prepared by authors of PointNetVLAD paper. 
  
 ```generate pickles
 cd generating_queries/ 
@@ -84,6 +85,8 @@ python generate_test_sets.py
 ```
 
 ### Training
+
+**MinkLoc++** can be used in unimodal scenario (3D point cloud input only) and multimodal scenario (3D point cloud + RGB image input).
 To train **MinkLoc++** network, download and decompress the 3D point cloud dataset and generate training pickles as described above.
 To train the multimodal model (3D+RGB) download the original Oxford RobotCar dataset 
 and extract RGB images corresponding to 3D point clouds as described above.
@@ -91,9 +94,9 @@ Edit the configuration files:
 - `config_baseline_multimodal.txt` when training a multimodal (3D+RGB) model 
 - `config_baseline.txt` and `config_refined.txt` when train unimodal (3D only) model
 
-Set `dataset_folder` parameter to the dataset root folder.
-Set `dataset_folder` parameter to the path with RGB images corresponding to 3D point clouds, extracted from 
-Oxford RobotCar dataset (only when training a multimodal model).
+Set `dataset_folder` parameter to the dataset root folder, where 3D point clouds are located.
+Set `image_path ` parameter to the path with RGB images corresponding to 3D point clouds, extracted from 
+Oxford RobotCar dataset using ```generate_rgb_for_lidar.py``` script (only when training a multimodal model).
 Modify `batch_size_limit` parameter depending on the available GPU memory. 
 Default limits requires 11GB of GPU RAM.
 
@@ -116,7 +119,6 @@ python train.py --config ../config/config_baseline.txt --model_config ../models/
 # Train unimodal (3D only) model on the Refined Dataset
 python train.py --config ../config/config_refined.txt --model_config ../models/minkloc3d.txt
 ```
-
 
 ### Pre-trained Models
 
