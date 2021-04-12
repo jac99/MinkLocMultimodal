@@ -178,8 +178,8 @@ python evaluate.py --config ../config/config_refined.txt --model_config ../model
 | DAGC [5] |     87.8     |   94.3 | 93.4 | 88.5 |
 | LPD-Net [6] |     94.9     |   98.9 | 96.4 | 94.4 |
 | SOE-Net [8] |     96.4   |   **97.7** | 95.9 | 92.6 |
-| MinkLoc3D [9] |     **98.5**     |   **99.7** | **99.3** | **96.7** |
-| **MinkLoc++ (RGB-only)**  |          |    |  |  |
+| MinkLoc3D [9] |     **98.5**     |   **99.7** | **99.3** | 96.7 |
+| **MinkLoc++ (RGB-only)**  |  98.4 | **99.7** | **99.3** | **97.4** |
 
 1. Y. Pan et al., "CORAL: Colored structural representation for bi-modal place recognition", preprint arXiv:2011.10934 (2020)
 2. Y. Lu et al., "PIC-Net: Point Cloud and Image Collaboration Network for Large-Scale Place Recognition", preprint arXiv:2008.00658 (2020)
