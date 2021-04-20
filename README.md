@@ -25,7 +25,7 @@ If you find this work useful, please consider citing:
         author={Jacek Komorowski and Monika Wysoczanska and Tomasz Trzcinski},
         year={2021},
         eprint={2104.05327},
-       archivePrefix={arXiv}
+        archivePrefix={arXiv}
     }
 
 
