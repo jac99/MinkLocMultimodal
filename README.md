@@ -20,13 +20,14 @@ In this work we describe how to detect and mitigate such risk when using a deep 
 ### Citation
 If you find this work useful, please consider citing:
 
-   @misc{komorowski2021minkloc,
-         title={MinkLoc++: Lidar and Monocular Image Fusion for Place Recognition}, 
-         author={Jacek Komorowski and Monika Wysoczanska and Tomasz Trzcinski},
-         year={2021},
-         eprint={2104.05327},
-         archivePrefix={arXiv}
-   }
+    @misc{minklocmultimodal,
+        title={MinkLoc++: Lidar and Monocular Image Fusion for Place Recognition}, 
+        author={Jacek Komorowski and Monika Wysoczanska and Tomasz Trzcinski},
+        year={2021},
+        eprint={2104.05327},
+       archivePrefix={arXiv}
+    }
+
 
 ### Environment and Dependencies
 Code was tested using Python 3.8 with PyTorch 1.7.1 and MinkowskiEngine 0.5.2 on Ubuntu 18.04 with CUDA 10.2.
