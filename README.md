@@ -47,7 +47,7 @@ export PYTHONPATH=$PYTHONPATH:/home/.../MinkLocMultimodal
 
 ### Datasets
 
-**MinkLoc++** is a multimodal descriptor based on two inputs:
+**MinkLoc++** is a multimodal descriptor based on a pair of inputs:
 - a 3D point cloud constructed by aggregating multiple 2D LiDAR scans from Oxford RobotCar dataset, 
 - a corresponding RGB image from the stereo-center camera.
 
