@@ -7,6 +7,8 @@ International Joint Conference on Neural Networks (IJCNN) 2021
 
 Warsaw University of Technology
 
+For point cloud-based global descriptor see [MinkLoc3D (WACV 2021)](https://github.com/jac99/MinkLoc3D).
+
 ![Overview](media/overview.jpg)
 
 ### Introduction
