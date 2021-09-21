@@ -1,13 +1,13 @@
 # MinkLoc++: Lidar and Monocular Image Fusion for Place Recognition
 
-Paper: [MinkLoc++: Lidar and Monocular Image Fusion for Place Recognition](https://arxiv.org/pdf/2104.05327.pdf) accepted for 
-International Joint Conference on Neural Networks (IJCNN) 2021
+Paper: [MinkLoc++: Lidar and Monocular Image Fusion for Place Recognition](https://ieeexplore.ieee.org/document/9533373) 
+accepted for International Joint Conference on Neural Networks (IJCNN) 2021
 
 [Jacek Komorowski](mailto:jacek.komorowski@pw.edu.pl), Monika Wysoczańska, Tomasz Trzciński
 
 Warsaw University of Technology
 
-For point cloud-based global descriptor see [MinkLoc3D (WACV 2021)](https://github.com/jac99/MinkLoc3D).
+For our point cloud-based global descriptor see [MinkLoc3D (WACV 2021)](https://github.com/jac99/MinkLoc3D).
 
 ![Overview](media/overview.jpg)
 
@@ -22,14 +22,13 @@ In this work we describe how to detect and mitigate such risk when using a deep 
 ### Citation
 If you find this work useful, please consider citing:
 
-    @misc{minklocmultimodal,
-        title={MinkLoc++: Lidar and Monocular Image Fusion for Place Recognition}, 
-        author={Jacek Komorowski and Monika Wysoczanska and Tomasz Trzcinski},
-        year={2021},
-        eprint={2104.05327},
-        archivePrefix={arXiv}
+    @INPROCEEDINGS{9533373,  
+       author={Komorowski, Jacek and Wysoczańska, Monika and Trzcinski, Tomasz},  
+       booktitle={2021 International Joint Conference on Neural Networks (IJCNN)},   
+       title={MinkLoc++: Lidar and Monocular Image Fusion for Place Recognition},   
+       year={2021},  
+       doi={10.1109/IJCNN52387.2021.9533373}
     }
-
 
 ### Environment and Dependencies
 Code was tested using Python 3.8 with PyTorch 1.7.1 and MinkowskiEngine 0.5.2 on Ubuntu 18.04 with CUDA 10.2.
