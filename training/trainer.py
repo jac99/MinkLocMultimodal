@@ -75,7 +75,7 @@ def tensors_to_numbers(stats):
     return stats
 
 
-def do_train(dataloaders, params: MinkLocParams, debug=False, visualize=False):
+def do_train(dataloaders, params: MinkLocParams, debug=False):
     # Create model class
     s = get_datetime()
     model = model_factory(params)
@@ -190,14 +190,10 @@ def do_train(dataloaders, params: MinkLocParams, debug=False, visualize=False):
                     continue
 
                 optimizer.zero_grad()
-                if visualize:
-                    #visualize_batch(batch)
-                    pass
 
                 with torch.set_grad_enabled(phase == 'train'):
                     # Compute embeddings of all elements
                     embeddings = model(batch)
-
                     loss, temp_stats, _ = loss_fn(embeddings, positives_mask, negatives_mask)
 
                     temp_stats = tensors_to_numbers(temp_stats)
