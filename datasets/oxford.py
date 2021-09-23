@@ -50,7 +50,6 @@ class OxfordDataset(Dataset):
             # Load point cloud and apply transform
             file_pathname = os.path.join(self.dataset_path, self.queries[ndx].rel_scan_filepath)
             query_pc = self.load_pc(file_pathname)
-            query_pc = torch.tensor(query_pc, dtype=torch.float)
             if self.transform is not None:
                 query_pc = self.transform(query_pc)
             result['cloud'] = query_pc
