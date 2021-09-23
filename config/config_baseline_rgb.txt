@@ -1,7 +1,5 @@
 # Config for training a single-modal model with RGB images only on Baseline dataset (RobotCar)
 [DEFAULT]
-num_points = 4096
-
 dataset_folder = /data3/pointnetvlad/benchmark_datasets
 image_path = /data3/images4lidar_small20
 use_cloud = False
