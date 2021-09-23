@@ -1,19 +1,20 @@
-# Config for training a multi-modal model with point clouds and RGB images on Baseline dataset (RobotCar)
+# Config for training a single-modal model with RGB images only on Baseline dataset (RobotCar)
 [DEFAULT]
 num_points = 4096
 
 dataset_folder = /data3/pointnetvlad/benchmark_datasets
 image_path = /data3/images4lidar_small20
+use_cloud = False
 
 [TRAIN]
 num_workers = 8
 batch_size = 8
-val_batch_size = 160
-batch_size_limit = 160
+val_batch_size = 256
+batch_size_limit = 256
 batch_expansion_rate = 1.4
 batch_expansion_th = 0.7
 
-lr = 1e-3
+lr = 1e-4
 image_lr = 1e-4
 epochs = 60
 scheduler_milestones = 40
@@ -21,8 +22,7 @@ scheduler_milestones = 40
 aug_mode = 1
 weight_decay = 1e-4
 
-loss = MultiBatchHardTripletMarginLoss
-weights = 0.5, 0.5, 0.0
+loss = BatchHardTripletMarginLoss
 normalize_embeddings = False
 margin = 0.2
 

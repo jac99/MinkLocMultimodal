@@ -1,3 +1,4 @@
+# Config for training a single-modal model with point clouds only on Refined dataset (RobotCar and Inhouse)
 [DEFAULT]
 num_points = 4096
 dataset_folder = /data3/pointnetvlad/benchmark_datasets

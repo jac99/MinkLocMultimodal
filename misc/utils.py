@@ -16,7 +16,7 @@ class ModelParams:
 
         self.model_params_path = model_params_path
         self.model = params.get('model')
-        self.mink_quantization_size = params.getfloat('mink_quantization_size')
+        self.mink_quantization_size = params.getfloat('mink_quantization_size', 0.01)
 
     def print(self):
         print('Model parameters:')
