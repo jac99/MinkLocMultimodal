@@ -32,14 +32,13 @@ If you find this work useful, please consider citing:
     }
 
 ### Environment and Dependencies
-Code was tested using Python 3.8 with PyTorch 1.7.1 and MinkowskiEngine 0.5.2 on Ubuntu 18.04 with CUDA 10.2.
+Code was tested using Python 3.8 with PyTorch 1.9.1 and MinkowskiEngine 0.5.4 on Ubuntu 20.04 with CUDA 10.2.
 
 The following Python packages are required:
-* PyTorch (version 1.7.1 or above)
-* MinkowskiEngine (version 0.5.2)
-* pytorch_metric_learning (version 0.9.98 or above)
+* PyTorch (version 1.9.1 or above)
+* MinkowskiEngine (version 0.5.4)
+* pytorch_metric_learning (version 0.9.99 or above)
 * tensorboard
-* bitarray
 
 
 Modify the `PYTHONPATH` environment variable to include absolute path to the project root folder: 
@@ -59,33 +58,35 @@ For details see PointNetVLAD paper or their github repository ([link](https://gi
 You can download training and evaluation point clouds from 
 [here](https://drive.google.com/open?id=1rflmyfZ1v9cGGH0RL4qXRrKhg-8A-U9q) 
 ([alternative link](https://drive.google.com/file/d/1-1HA9Etw2PpZ8zHd3cjrfiZa8xzbp41J/view?usp=sharing)). 
-Extract the folder in the same directory as the project code. Thus, in that directory you must have two folders: 1) benchmark_datasets and 2) MinkLocMultimodal.
 
 RGB images are taken directly from Oxford RobotCar dataset. 
 First, you need to download stereo camera images from Oxford RobotCar dataset.
 See dataset website for details ([link](https://robotcar-dataset.robots.ox.ac.uk)).
 After downloading the dataset, run ```generate_rgb_for_lidar.py``` script that finds 20 closest RGB images in RobotCar 
-dataset for each 3D point cloud and saves them in the target directory. 
+dataset for each 3D point cloud, downsamples them and saves them in the target directory. 
 During the training an input to the network consists of a 3D point cloud and one RGB image randomly chosen 
 from these 20 corresponding images.
 During the evaluation, a network input consists of a 3D point cloud and one RGB image with the closest timestamp.
 
 Before the network training or evaluation, run the below code to generate training pickles (with positive and negative point 
-clouds for each anchor point cloud) and evaluation pickles. The procedure for generating training and 
-evaluation pickles is the same as prepared by authors of PointNetVLAD paper. 
+clouds for each anchor point cloud) and evaluation pickles. Training pickle format is optimized and different from the  
+format used by PointNetVLAD code. 
  
 ```generate pickles
 cd generating_queries/ 
 
 # Generate training tuples for the Baseline Dataset
-python generate_training_tuples_baseline.py
+python generate_training_tuples_baseline.py --dataset_root <dataset_root_path>
 
 # Generate training tuples for the Refined Dataset
-python generate_training_tuples_refine.py
+python generate_training_tuples_refine.py --dataset_root <dataset_root_path>
 
 # Generate evaluation tuples
-python generate_test_sets.py
+python generate_test_sets.py --dataset_root <dataset_root_path>
 ```
+`<dataset_root_path>` is a path to dataset root folder, e.g. `/data/pointnetvlad/benchmark_datasets/`.
+Before running the code, ensure you have read/write rights to `<dataset_root_path>`, as training and evaluation pickles
+are saved there. 
 
 ### Training
 
