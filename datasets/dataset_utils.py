@@ -1,6 +1,7 @@
 # Author: Jacek Komorowski
 # Warsaw University of Technology
 
+import numpy as np
 import torch
 from torch.utils.data import DataLoader
 import MinkowskiEngine as ME
@@ -9,6 +10,26 @@ from datasets.oxford import OxfordDataset
 from datasets.augmentation import TrainTransform, TrainSetTransform, TrainRGBTransform, ValRGBTransform
 from datasets.samplers import BatchSampler
 from misc.utils import MinkLocParams
+
+
+class TrainingTuple:
+    # Tuple describing an element for training/validation
+    def __init__(self, id: int, timestamp: int, rel_scan_filepath: str, positives: np.ndarray,
+                 non_negatives: np.ndarray, position: np.ndarray):
+        # id: element id (ids start from 0 and are consecutive numbers)
+        # ts: timestamp
+        # rel_scan_filepath: relative path to the scan
+        # positives: sorted ndarray of positive elements id
+        # negatives: sorted ndarray of elements id
+        # position: x, y position in meters (northing, easting)
+        assert position.shape == (2,)
+
+        self.id = id
+        self.timestamp = timestamp
+        self.rel_scan_filepath = rel_scan_filepath
+        self.positives = positives
+        self.non_negatives = non_negatives
+        self.position = position
 
 
 def make_datasets(params: MinkLocParams, debug=False):
