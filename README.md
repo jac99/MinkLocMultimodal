@@ -2,6 +2,7 @@
 
 Paper: [MinkLoc++: Lidar and Monocular Image Fusion for Place Recognition](https://ieeexplore.ieee.org/document/9533373) 
 accepted for International Joint Conference on Neural Networks (IJCNN) 2021
+[ArXiv](https://arxiv.org/pdf/2104.05327.pdf) 
 
 [Jacek Komorowski](mailto:jacek.komorowski@pw.edu.pl), Monika Wysoczańska, Tomasz Trzciński
 
