@@ -69,8 +69,8 @@ from these 20 corresponding images.
 During the evaluation, a network input consists of a 3D point cloud and one RGB image with the closest timestamp.
 
 Before the network training or evaluation, run the below code to generate training pickles (with positive and negative point 
-clouds for each anchor point cloud) and evaluation pickles. Training pickle format is optimized and different from the  
-format used by PointNetVLAD code. 
+clouds for each anchor point cloud) and evaluation pickles. Training pickle format is optimized and different from the 
+format used in PointNetVLAD code. 
  
 ```generate pickles
 cd generating_queries/ 
