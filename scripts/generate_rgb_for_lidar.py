@@ -221,8 +221,8 @@ if __name__ == '__main__':
     parser.add_argument('--oxford_root', type=str, required=True, help='Path to Oxford RobotCar dataset')
     parser.add_argument('--camera', type=str, default='stereo/centre', help='Camera')
     parser.add_argument('--out_path', type=str, required=True, help='Output path to save converted images')
-    # Default downsampling factor 1280x960 images to 640x480
-    parser.add_argument('--downsample', type=int, default=2, help='Image downsampling factor')
+    # Default downsampling factor 1280x960 images to 320x240
+    parser.add_argument('--downsample', type=int, default=4, help='Image downsampling factor')
 
     args = parser.parse_args()
     print('Config path: {}'.format(args.config))
