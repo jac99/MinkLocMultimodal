@@ -12,26 +12,6 @@ from datasets.samplers import BatchSampler
 from misc.utils import MinkLocParams
 
 
-class TrainingTuple:
-    # Tuple describing an element for training/validation
-    def __init__(self, id: int, timestamp: int, rel_scan_filepath: str, positives: np.ndarray,
-                 non_negatives: np.ndarray, position: np.ndarray):
-        # id: element id (ids start from 0 and are consecutive numbers)
-        # ts: timestamp
-        # rel_scan_filepath: relative path to the scan
-        # positives: sorted ndarray of positive elements id
-        # negatives: sorted ndarray of elements id
-        # position: x, y position in meters (northing, easting)
-        assert position.shape == (2,)
-
-        self.id = id
-        self.timestamp = timestamp
-        self.rel_scan_filepath = rel_scan_filepath
-        self.positives = positives
-        self.non_negatives = non_negatives
-        self.position = position
-
-
 def make_datasets(params: MinkLocParams, debug=False):
     # Create training and validation datasets
     datasets = {}
@@ -45,25 +25,16 @@ def make_datasets(params: MinkLocParams, debug=False):
         image_train_transform = None
         image_val_transform = None
 
-    if debug:
-        max_elems = 1000
-        val_max_elems = 1000
-
-    else:
-        # None means no limit
-        max_elems = params.max_elems
-        val_max_elems = params.val_max_elems
-
     datasets['train'] = OxfordDataset(params.dataset_folder, params.train_file, image_path=params.image_path,
                                       lidar2image_ndx=params.lidar2image_ndx, transform=train_transform,
                                       set_transform=train_set_transform, image_transform=image_train_transform,
-                                      max_elems=max_elems, use_cloud=params.use_cloud)
+                                      use_cloud=params.use_cloud)
     val_transform = None
     if params.val_file is not None:
         datasets['val'] = OxfordDataset(params.dataset_folder, params.val_file, image_path=params.image_path,
                                         lidar2image_ndx=params.lidar2image_ndx, transform=val_transform,
                                         set_transform=train_set_transform, image_transform=image_val_transform,
-                                        max_elems=val_max_elems, use_cloud=params.use_cloud)
+                                        use_cloud=params.use_cloud)
     return datasets
 
 
@@ -74,10 +45,8 @@ def make_collate_fn(dataset: OxfordDataset, mink_quantization_size=None):
         labels = [e['ndx'] for e in data_list]
 
         # Compute positives and negatives mask
-        # dataset.queries[label]['positives'] is bitarray
-        positives_mask = [[dataset.queries[label]['positives'][e] for e in labels] for label in labels]
-        negatives_mask = [[dataset.queries[label]['negatives'][e] for e in labels] for label in labels]
-
+        positives_mask = [[in_sorted_array(e, dataset.queries[label].positives) for e in labels] for label in labels]
+        negatives_mask = [[not in_sorted_array(e, dataset.queries[label].non_negatives) for e in labels] for label in labels]
         positives_mask = torch.tensor(positives_mask)
         negatives_mask = torch.tensor(negatives_mask)
 
@@ -138,3 +107,11 @@ def make_dataloaders(params: MinkLocParams, debug=False):
                                        num_workers=params.num_workers, pin_memory=True)
 
     return dataloders
+
+
+def in_sorted_array(e: int, array: np.ndarray) -> bool:
+    pos = np.searchsorted(array, e)
+    if pos == len(array) or pos == -1:
+        return False
+    else:
+        return array[pos] == e

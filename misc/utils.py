@@ -87,8 +87,6 @@ class MinkLocParams:
         self.batch_size = params.getint('batch_size', 128)
         # Validation batch size is fixed and does not grow
         self.val_batch_size = params.getint('val_batch_size', 64)
-        self.max_elems = params.getint('max_elems', None)
-        self.val_max_elems = params.getint('val_max_elems', None)
 
         # Set batch_expansion_th to turn on dynamic batch sizing
         # When number of non-zero triplets falls below batch_expansion_th, expand batch size

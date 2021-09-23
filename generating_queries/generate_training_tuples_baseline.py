@@ -9,7 +9,7 @@ import pickle
 import argparse
 import tqdm
 
-from datasets.dataset_utils import TrainingTuple
+from datasets.oxford import TrainingTuple
 # Import test set boundaries
 from generating_queries.generate_test_sets import P1, P2, P3, P4, check_in_test_set
 
