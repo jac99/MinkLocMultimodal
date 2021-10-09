@@ -141,11 +141,10 @@ def get_latent_vectors(model, set, device, params):
             if params.use_rgb:
                 batch['images'] = x['image'].unsqueeze(0).to(device)
 
-            for i in range(100):
-                tick = timeit.timeit()
-                x = model(batch)
-                tock = timeit.timeit()
-                time_l.append(tock-tick)
+            tick = timeit.timeit()
+            x = model(batch)
+            tock = timeit.timeit()
+            time_l.append(tock-tick)
 
             embedding = x['embedding']
 
