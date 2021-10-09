@@ -141,19 +141,13 @@ def get_latent_vectors(model, set, device, params):
             if params.use_rgb:
                 batch['images'] = x['image'].unsqueeze(0).to(device)
 
-            tick = timeit.timeit()
-            x = model(batch)
-            tock = timeit.timeit()
-            time_l.append(tock-tick)
+            for i in range(1000):
+                tick = timeit.timeit()
+                x = model(batch)
+                tock = timeit.timeit()
+                time_l.append(tock-tick)
 
-            embedding = x['embedding']
-
-            # embedding is (1, 256) tensor
-            if params.normalize_embeddings:
-                embedding = torch.nn.functional.normalize(embedding, p=2, dim=1)  # Normalize embeddings
-
-        embedding = embedding.detach().cpu().numpy()
-        embeddings_l.append(embedding)
+        break
 
     print(f"Mean time: {np.mean(time_l)}")
 
