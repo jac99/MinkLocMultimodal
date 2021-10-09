@@ -11,7 +11,7 @@ import argparse
 import torch
 import MinkowskiEngine as ME
 import random
-import timeit
+import time
 
 from misc.utils import MinkLocParams
 from models.model_factory import model_factory
@@ -142,9 +142,9 @@ def get_latent_vectors(model, set, device, params):
                 batch['images'] = x['image'].unsqueeze(0).to(device)
 
             for i in range(1000):
-                tick = timeit.timeit()
+                tick = time.time()
                 x = model(batch)
-                tock = timeit.timeit()
+                tock = time.time()
                 time_l.append(tock-tick)
 
         break
