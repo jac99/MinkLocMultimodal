@@ -13,8 +13,6 @@ Warsaw University of Technology
 * RadarLoc: Large-Scale Topological Radar Localization Using Learned Descriptors (ICONIP 2021): [RadarLoc](https://github.com/jac99/RadarLoc)
 
 
-![Overview](media/overview.jpg)
-
 ### Introduction
 We present a discriminative multimodal descriptor based on a pair of sensor readings: a point cloud from a LiDAR and an image from an RGB camera.
 Our descriptor, named MinkLoc++, can be used for place recognition, re-localization and loop closure purposes in robotics or autonomous vehicles applications.
@@ -23,6 +21,9 @@ The proposed method achieves state-of-the-art performance on standard place reco
 We also identify dominating modality problem when training a multimodal descriptor. 
 The problem manifests itself when the network focuses on a modality with a larger overfit to the training data. This drives the loss down during the training but leads to suboptimal performance on the evaluation set.
 In this work we describe how to detect and mitigate such risk when using a deep metric learning approach to train a multimodal neural network.
+
+![Overview](media/overview.jpg)
+
 ### Citation
 If you find this work useful, please consider citing:
 
