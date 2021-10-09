@@ -8,7 +8,10 @@ accepted for International Joint Conference on Neural Networks (IJCNN) 2021
 
 Warsaw University of Technology
 
-For our point cloud-based global descriptor see [MinkLoc3D (WACV 2021)](https://github.com/jac99/MinkLoc3D).
+### Our other projects ###
+* MinkLoc3D: Point Cloud Based Large-Scale Place Recognition (WACV 2021): [MinkLoc3D](https://github.com/jac99/MinkLoc3D) 
+* RadarLoc: Large-Scale Topological Radar Localization Using Learned Descriptors (ICONIP 2021): [RadarLoc](https://github.com/jac99/RadarLoc)
+
 
 ![Overview](media/overview.jpg)
 
