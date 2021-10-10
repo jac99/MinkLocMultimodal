@@ -11,6 +11,7 @@ Warsaw University of Technology
 ### Our other projects ###
 * MinkLoc3D: Point Cloud Based Large-Scale Place Recognition (WACV 2021): [MinkLoc3D](https://github.com/jac99/MinkLoc3D)
 * Large-Scale Topological Radar Localization Using Learned Descriptors (ICONIP 2021): [RadarLoc](https://github.com/jac99/RadarLoc)
+* EgonNN: Egocentric Neural Network for Point Cloud Based 6DoF Relocalization at the City Scale (2021): [EgoNN](https://github.com/jac99/Egonn) 
 
 ### Introduction
 We present a discriminative multimodal descriptor based on a pair of sensor readings: a point cloud from a LiDAR and an image from an RGB camera.
