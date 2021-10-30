@@ -220,7 +220,6 @@ if __name__ == '__main__':
     parser.add_argument('--config', type=str, required=True, help='Path to configuration file')
     parser.add_argument('--oxford_root', type=str, required=True, help='Path to Oxford RobotCar dataset')
     parser.add_argument('--camera', type=str, default='stereo/centre', help='Camera')
-    parser.add_argument('--out_path', type=str, required=True, help='Output path to save converted images')
     # Default downsampling factor 1280x960 images to 320x240
     parser.add_argument('--downsample', type=int, default=4, help='Image downsampling factor')
 
@@ -228,7 +227,6 @@ if __name__ == '__main__':
     print('Config path: {}'.format(args.config))
     print('Oxford RobotCar root folder: {}'.format(args.oxford_root))
     print('Camera: {}'.format(args.camera))
-    print('Output path: {}'.format(args.out_path))
     print('Image downsampling factor: {}'.format(args.downsample))
 
     nn_threshold = 1000  # Nearest neighbour threshold in miliseconds
@@ -242,7 +240,12 @@ if __name__ == '__main__':
     assert os.path.exists(out_path), 'Cannot create output directory: {}'.format(out_path)
 
     params = MinkLocParams(args.config, model_params_path=None)
-    params.print()
+
+    print(f'Parameters from config file: {args.config}')
+    print(f"Output folder for downsampled images (image_path): {params.image_path}")
+    print(f"Dataset folder (point clouds): {params.dataset_folder}")
+    print(f"Evaluation set - query split pickle: {params.eval_query_files}")
+    print(f"Evaluation set - database split pickle: {params.eval_database_files}")
 
     # Index LiDAR scans in the dataset
     lidar_ndx = index_scans_in_datasets(params)

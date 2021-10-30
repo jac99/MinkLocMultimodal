@@ -26,13 +26,13 @@ def make_datasets(params: MinkLocParams, debug=False):
         image_val_transform = None
 
     datasets['train'] = OxfordDataset(params.dataset_folder, params.train_file, image_path=params.image_path,
-                                      lidar2image_ndx=params.lidar2image_ndx, transform=train_transform,
+                                      lidar2image_ndx_path=params.lidar2image_ndx_path, transform=train_transform,
                                       set_transform=train_set_transform, image_transform=image_train_transform,
                                       use_cloud=params.use_cloud)
     val_transform = None
     if params.val_file is not None:
         datasets['val'] = OxfordDataset(params.dataset_folder, params.val_file, image_path=params.image_path,
-                                        lidar2image_ndx=params.lidar2image_ndx, transform=val_transform,
+                                        lidar2image_ndx_path=params.lidar2image_ndx_path, transform=val_transform,
                                         set_transform=train_set_transform, image_transform=image_val_transform,
                                         use_cloud=params.use_cloud)
     return datasets

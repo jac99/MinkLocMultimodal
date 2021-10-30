@@ -23,7 +23,8 @@ class OxfordDataset(Dataset):
     Dataset wrapper for Oxford laser scans dataset from PointNetVLAD project.
     """
     def __init__(self, dataset_path: str, query_filename: str, image_path: str = None,
-                 lidar2image_ndx=None, transform=None, set_transform=None, image_transform=None, use_cloud=True):
+                 lidar2image_ndx_path: str = None, transform=None, set_transform=None, image_transform=None,
+                 use_cloud: bool = True):
         assert os.path.exists(dataset_path), 'Cannot access dataset path: {}'.format(dataset_path)
         self.dataset_path = dataset_path
         self.query_filepath = os.path.join(dataset_path, query_filename)
@@ -32,12 +33,15 @@ class OxfordDataset(Dataset):
         self.set_transform = set_transform
         self.queries: Dict[int, TrainingTuple] = pickle.load(open(self.query_filepath, 'rb'))
         self.image_path = image_path
-        self.lidar2image_ndx = lidar2image_ndx
+        self.lidar2image_ndx_path = lidar2image_ndx_path
         self.image_transform = image_transform
         self.n_points = 4096    # pointclouds in the dataset are downsampled to 4096 points
         self.image_ext = '.png'
         self.use_cloud = use_cloud
         print('{} queries in the dataset'.format(len(self)))
+
+        assert os.path.exists(self.lidar2image_ndx_path), f"Cannot access lidar2image_ndx: {self.lidar2image_ndx_path}"
+        self.lidar2image_ndx = pickle.load(open(self.lidar2image_ndx_path, 'rb'))
 
     def __len__(self):
         return len(self.queries)

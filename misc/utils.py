@@ -64,8 +64,6 @@ class MinkLocParams:
             else:
                 self.lidar2image_ndx_path = params.get('lidar2image_ndx_path')
 
-            self.lidar2image_ndx = pickle.load(open(self.lidar2image_ndx_path, 'rb'))
-
             self.eval_database_files = ['oxford_evaluation_database.pickle']
             self.eval_query_files = ['oxford_evaluation_query.pickle']
         else:
