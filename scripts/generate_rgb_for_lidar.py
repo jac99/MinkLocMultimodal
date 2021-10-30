@@ -7,9 +7,10 @@ import argparse
 import numpy as np
 from PIL import Image
 from multiprocessing import Pool
+from typing import Dict
 
 from misc.utils import MinkLocParams
-from datasets.dataset_utils import make_datasets
+from datasets.oxford import TrainingTuple
 from thirdparty.robotcardatasetsdk.image import load_image
 
 
@@ -49,20 +50,33 @@ def index_readings(root_folder, sensor_folder, ext='.jpg', cache_path='.'):
     return reading_ts_ndx
 
 
+def get_queries(dataset_path: str, query_filename: str) ->  Dict[int, TrainingTuple]:
+    assert os.path.exists(dataset_path), 'Cannot access dataset path: {}'.format(dataset_path)
+    query_filepath = os.path.join(dataset_path, query_filename)
+    assert os.path.exists(query_filepath), 'Cannot access query file: {}'.format(query_filepath)
+    queries = pickle.load(open(query_filepath, 'rb'))
+    return queries
+
+
 def index_scans_in_datasets(params: MinkLocParams):
 
     scans_ts_ndx = {}
 
-    # Training and validation dataset
-    datasets = make_datasets(params, debug=False)
+    print('Indexing LiDAR scans in dataset: {} ...'.format(params.train_file))
+    train_queries = get_queries(params.dataset_folder, params.train_file)
+    for e in train_queries:
+        ts, traversal = get_ts_traversal(train_queries[e]['query'])
+        scans_ts_ndx[ts] = traversal
 
-    for ds in datasets:
-        print('Indexing LiDAR scans in dataset {}: {}'.format(ds, datasets[ds].dataset_path))
-        for e in datasets[ds].queries:
-            ts, traversal = get_ts_traversal(datasets[ds].queries[e]['query'])
+    if params.val_file is not None:
+        print('Indexing LiDAR scans in dataset: {} ...'.format(params.val_file))
+        val_queries = get_queries(params.dataset_folder, params.val_file)
+        for e in val_queries:
+            ts, traversal = get_ts_traversal(train_queries[e]['query'])
             scans_ts_ndx[ts] = traversal
 
     # Evaluation datasets
+    print('Indexing LiDAR scans in evaluation set...')
     for database_file, query_file in zip(params.eval_database_files, params.eval_query_files):
         # Extract location name from query and database files
         location_name = database_file.split('_')[0]
@@ -89,11 +103,11 @@ def index_scans_in_datasets(params: MinkLocParams):
             tmp_ndx = index_eval_set(set)
             scans_ts_ndx.update(tmp_ndx)
 
-    print('Indexed {} LiDAR point cloud'.format(len(scans_ts_ndx)))
+    print('Indexed {} LiDAR point clouds'.format(len(scans_ts_ndx)))
     return scans_ts_ndx
 
 
-def get_ts_traversal(query_relative_path):
+def get_ts_traversal(query_relative_path: str):
     temp1, temp2 = os.path.split(query_relative_path)
     temp1 = os.path.split(temp1)[0]
     traversal = os.path.split(temp1)[1]
@@ -228,6 +242,7 @@ if __name__ == '__main__':
     print('Oxford RobotCar root folder: {}'.format(args.oxford_root))
     print('Camera: {}'.format(args.camera))
     print('Image downsampling factor: {}'.format(args.downsample))
+    print('')
 
     nn_threshold = 1000  # Nearest neighbour threshold in miliseconds
     k = 20               # Number of nearest neighbour images to find for each LiDAR scan
@@ -239,8 +254,9 @@ if __name__ == '__main__':
     print(f'Parameters from config file: {args.config}')
     print(f"Output folder for downsampled images (image_path): {params.image_path}")
     print(f"Dataset folder (point clouds): {params.dataset_folder}")
-    print(f"Evaluation set - query split pickle: {params.eval_query_files}")
-    print(f"Evaluation set - database split pickle: {params.eval_database_files}")
+    print(f"Evaluation sets - query split pickle: {params.eval_query_files}")
+    print(f"Evaluation sets - database split pickle: {params.eval_database_files}")
+    print('')
 
     # Create output path
     out_path = params.image_path
