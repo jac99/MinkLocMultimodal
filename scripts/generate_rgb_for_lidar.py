@@ -18,7 +18,7 @@ def index_readings(root_folder, sensor_folder, ext='.jpg', cache_path='.'):
     # Index all RGB  images in the root folder
     print('Indexing root folder: {}'.format(root_folder))
 
-    assert os.path.exists(root_folder), 'Cannot access root folder: {}'.format(root_folder)
+    assert os.path.exists(root_folder), 'Cannot access Oxford RobotCar root folder: {}'.format(root_folder)
 
     tmp = sensor_folder.replace('/', '_')   # Fix for stereo subfolders
     cache_filepath = os.path.join(cache_path, 'cached_ndx_{}.pickle'.format(tmp))
