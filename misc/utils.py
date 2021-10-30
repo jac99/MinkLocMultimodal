@@ -146,8 +146,6 @@ class MinkLocParams:
 
     def _check_params(self):
         assert os.path.exists(self.dataset_folder), 'Cannot access dataset: {}'.format(self.dataset_folder)
-        if self.use_rgb:
-            assert os.path.exists(self.image_path), 'Cannot access image folder: {}'.format(self.image_path)
 
     def print(self):
         print('Parameters:')
