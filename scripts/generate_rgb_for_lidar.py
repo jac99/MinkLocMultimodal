@@ -234,11 +234,6 @@ if __name__ == '__main__':
     ext = '.png'         # Image extension
     print('Number of nearest images for each scan (k): {}'.format(k))
 
-    out_path = args.out_path
-    if not os.path.exists(out_path):
-        os.mkdir(out_path)
-    assert os.path.exists(out_path), 'Cannot create output directory: {}'.format(out_path)
-
     params = MinkLocParams(args.config, model_params_path=None)
 
     print(f'Parameters from config file: {args.config}')
@@ -246,6 +241,12 @@ if __name__ == '__main__':
     print(f"Dataset folder (point clouds): {params.dataset_folder}")
     print(f"Evaluation set - query split pickle: {params.eval_query_files}")
     print(f"Evaluation set - database split pickle: {params.eval_database_files}")
+
+    # Create output path
+    out_path = params.image_path
+    if not os.path.exists(out_path):
+        os.mkdir(out_path)
+    assert os.path.exists(out_path), 'Cannot create output directory: {}'.format(out_path)
 
     # Index LiDAR scans in the dataset
     lidar_ndx = index_scans_in_datasets(params)
