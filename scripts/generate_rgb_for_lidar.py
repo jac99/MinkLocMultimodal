@@ -215,8 +215,9 @@ def find_k_closest(arr, x, k):
 # *************************************
 
 
-def convert_img(param):
-    img_filepath, out_path, downsample = param
+def convert_img(params):
+    img_filepath, out_path, downsample = params
+
     img_file = os.path.split(img_filepath)[1]
     out_filepath = os.path.join(out_path, img_file)
 
@@ -305,9 +306,6 @@ if __name__ == '__main__':
     num_workers = 10
     print('Processing {} images using {} workers...'.format(len(args_l), num_workers))
 
-    """
-    with Pool(num_workers) as p:
-        p.starmap(convert_img, args_l)
-    """
-    r = process_map(convert_img, args_l, max_workers=num_workers)
+    chunksize = len(args_l) // num_workers
+    process_map(convert_img, args_l, max_workers=num_workers, chunksize = chunksize)
     print('Finished')
