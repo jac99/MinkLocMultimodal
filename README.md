@@ -63,7 +63,7 @@ You can download training and evaluation point clouds from
 [here](https://drive.google.com/open?id=1rflmyfZ1v9cGGH0RL4qXRrKhg-8A-U9q) 
 ([alternative link](https://drive.google.com/file/d/1-1HA9Etw2PpZ8zHd3cjrfiZa8xzbp41J/view?usp=sharing)). 
 
-After downloading the dataset, you need to edit ```config_baseline_multimodal.txt``` configuration file.
+After downloading the dataset, you need to edit ```config_baseline_multimodal.txt``` configuration file (in ```config``` folder)
 _dataset_folder_ parameter must be a root folder of PointNetVLAD dataset with 3D point clouds.
 _image_path_ parameter must be a folder where downsampled RGB images from Oxford RobotCar dataset will be saved.
 The folder will be created by ```generate_rgb_for_lidar.py``` script (see below).
