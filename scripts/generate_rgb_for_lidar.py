@@ -242,20 +242,20 @@ if __name__ == '__main__':
     print('Oxford RobotCar root folder: {}'.format(args.oxford_root))
     print('Camera: {}'.format(args.camera))
     print('Image downsampling factor: {}'.format(args.downsample))
-    print('')
 
     nn_threshold = 1000  # Nearest neighbour threshold in miliseconds
     k = 20               # Number of nearest neighbour images to find for each LiDAR scan
     ext = '.png'         # Image extension
     print('Number of nearest images for each scan (k): {}'.format(k))
+    print('')
 
     params = MinkLocParams(args.config, model_params_path=None)
 
     print(f'Parameters from config file: {args.config}')
     print(f"Output folder for downsampled images (image_path): {params.image_path}")
     print(f"Dataset folder (point clouds): {params.dataset_folder}")
-    print(f"Evaluation sets - query split pickle: {params.eval_query_files}")
-    print(f"Evaluation sets - database split pickle: {params.eval_database_files}")
+    print(f"Evaluation sets - query split: {params.eval_query_files}")
+    print(f"Evaluation sets - database split: {params.eval_database_files}")
     print('')
 
     # Create output path
