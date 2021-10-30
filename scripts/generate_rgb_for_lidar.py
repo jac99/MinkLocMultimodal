@@ -301,7 +301,7 @@ if __name__ == '__main__':
             args_l.append((img_file_path, img_out_path, args.downsample))
 
     num_workers = 10
-    print('Processing {} scenes using {} workers...'.format(len(args_l), num_workers))
+    print('Processing {} images using {} workers...'.format(len(args_l), num_workers))
 
     with Pool(num_workers) as p:
         p.starmap(convert_img, args_l)
