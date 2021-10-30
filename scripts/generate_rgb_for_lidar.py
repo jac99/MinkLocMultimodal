@@ -65,14 +65,14 @@ def index_scans_in_datasets(params: MinkLocParams):
     print('Indexing LiDAR scans in dataset: {} ...'.format(params.train_file))
     train_queries = get_queries(params.dataset_folder, params.train_file)
     for e in train_queries:
-        ts, traversal = get_ts_traversal(train_queries[e]['query'])
+        ts, traversal = get_ts_traversal(train_queries[e].rel_scan_filepath)
         scans_ts_ndx[ts] = traversal
 
     if params.val_file is not None:
         print('Indexing LiDAR scans in dataset: {} ...'.format(params.val_file))
         val_queries = get_queries(params.dataset_folder, params.val_file)
         for e in val_queries:
-            ts, traversal = get_ts_traversal(train_queries[e]['query'])
+            ts, traversal = get_ts_traversal(train_queries[e].rel_scan_filepath)
             scans_ts_ndx[ts] = traversal
 
     # Evaluation datasets
