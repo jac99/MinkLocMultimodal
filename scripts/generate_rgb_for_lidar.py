@@ -306,6 +306,6 @@ if __name__ == '__main__':
     num_workers = 10
     print('Processing {} images using {} workers...'.format(len(args_l), num_workers))
 
-    chunksize = len(args_l) // num_workers
+    chunksize = len(args_l) // *num_workers * 4)
     process_map(convert_img, args_l, max_workers=num_workers, chunksize = chunksize)
     print('Finished')
