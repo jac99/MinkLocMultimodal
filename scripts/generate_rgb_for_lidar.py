@@ -8,6 +8,7 @@ import numpy as np
 from PIL import Image
 from multiprocessing import Pool
 from typing import Dict
+from tqdm.contrib.concurrent import process_map
 
 from misc.utils import MinkLocParams
 from datasets.oxford import TrainingTuple
@@ -214,7 +215,8 @@ def find_k_closest(arr, x, k):
 # *************************************
 
 
-def convert_img(img_filepath, out_path, downsample=4):
+def convert_img(param):
+    img_filepath, out_path, downsample = param
     img_file = os.path.split(img_filepath)[1]
     out_filepath = os.path.join(out_path, img_file)
 
@@ -303,7 +305,9 @@ if __name__ == '__main__':
     num_workers = 10
     print('Processing {} images using {} workers...'.format(len(args_l), num_workers))
 
+    """
     with Pool(num_workers) as p:
         p.starmap(convert_img, args_l)
-
+    """
+    r = process_map(convert_img, args_l, max_workers=num_workers)
     print('Finished')
