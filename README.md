@@ -67,7 +67,29 @@ You can download training and evaluation point clouds from
 After downloading the dataset, you need to edit ```config_baseline_multimodal.txt``` configuration file (in ```config``` folder).
 Set _dataset_folder_ parameter to point to a root folder of PointNetVLAD dataset with 3D point clouds.
 _image_path_ parameter must be a folder where downsampled RGB images from Oxford RobotCar dataset will be saved.
-The folder will be created by ```generate_rgb_for_lidar.py``` script (see below).
+The folder will be created by ```generate_rgb_for_lidar.py``` script.
+
+#### Generate training and evaluation tuples
+
+Run the below code to generate training pickles (with positive and negative point 
+clouds for each anchor point cloud) and evaluation pickles. Training pickle format is optimized and different from the 
+format used in PointNetVLAD code. 
+ 
+```generate pickles
+cd generating_queries/ 
+
+# Generate training tuples for the Baseline Dataset
+python generate_training_tuples_baseline.py --dataset_root <dataset_root_path>
+
+# Generate training tuples for the Refined Dataset
+python generate_training_tuples_refine.py --dataset_root <dataset_root_path>
+
+# Generate evaluation tuples
+python generate_test_sets.py --dataset_root <dataset_root_path>
+```
+`<dataset_root_path>` is a path to dataset root folder, e.g. `/data/pointnetvlad/benchmark_datasets/`.
+Before running the code, ensure you have read/write rights to `<dataset_root_path>`, as training and evaluation pickles
+are saved there. 
 
 #### Downsample RGB images and index RGB images linked with each point cloud
 
@@ -87,28 +109,6 @@ cd scripts/
 # Generate training tuples for the Baseline Dataset
 python generate_rgb_for_lidar.py --config ../config/config_baseline_multimodal.txt --oxford_root <path_to_Oxford_RobotCar_dataset>
 ```
-
-#### Generate training and evaluation tuples
-
-Before the network training or evaluation, run the below code to generate training pickles (with positive and negative point 
-clouds for each anchor point cloud) and evaluation pickles. Training pickle format is optimized and different from the 
-format used in PointNetVLAD code. 
- 
-```generate pickles
-cd generating_queries/ 
-
-# Generate training tuples for the Baseline Dataset
-python generate_training_tuples_baseline.py --dataset_root <dataset_root_path>
-
-# Generate training tuples for the Refined Dataset
-python generate_training_tuples_refine.py --dataset_root <dataset_root_path>
-
-# Generate evaluation tuples
-python generate_test_sets.py --dataset_root <dataset_root_path>
-```
-`<dataset_root_path>` is a path to dataset root folder, e.g. `/data/pointnetvlad/benchmark_datasets/`.
-Before running the code, ensure you have read/write rights to `<dataset_root_path>`, as training and evaluation pickles
-are saved there. 
 
 ### Training
 
