@@ -63,14 +63,32 @@ You can download training and evaluation point clouds from
 [here](https://drive.google.com/open?id=1rflmyfZ1v9cGGH0RL4qXRrKhg-8A-U9q) 
 ([alternative link](https://drive.google.com/file/d/1-1HA9Etw2PpZ8zHd3cjrfiZa8xzbp41J/view?usp=sharing)). 
 
+After downloading the dataset, you need to edit   
+```config_baseline_multimodal.txt``` configuration file.
+_dataset_folder_ parameter must be a root folder of PointNetVLAD dataset with 3D point clouds.
+_image_path_ parameter must be a folder where downsampled RGB images from Oxford RobotCar dataset will be saved.
+The folder will be created by ```generate_rgb_for_lidar.py``` script (see below).
+
+#### Downsample RGB images and index RGB images linked with each point cloud
+
 RGB images are taken directly from Oxford RobotCar dataset. 
 First, you need to download stereo camera images from Oxford RobotCar dataset.
 See dataset website for details ([link](https://robotcar-dataset.robots.ox.ac.uk)).
-After downloading the dataset, run ```generate_rgb_for_lidar.py``` script that finds 20 closest RGB images in RobotCar 
-dataset for each 3D point cloud, downsamples them and saves them in the target directory. 
+After downloading Oxford RobotCar dataset, run ```generate_rgb_for_lidar.py``` script.
+The script finds 20 closest RGB images in RobotCar dataset for each 3D point cloud, downsamples them and saves them in the target directory 
+(_image_path_ parameter in ```config_baseline_multimodal.txt```).
 During the training an input to the network consists of a 3D point cloud and one RGB image randomly chosen 
 from these 20 corresponding images.
 During the evaluation, a network input consists of a 3D point cloud and one RGB image with the closest timestamp.
+
+```
+cd scripts/ 
+
+# Generate training tuples for the Baseline Dataset
+python generate_rgb_for_lidar.py --config ../config/config_baseline_multimodal.txt --oxford_root <path_to_Oxford_RobotCar_dataset>
+```
+
+#### Generate training and evaluation tuples
 
 Before the network training or evaluation, run the below code to generate training pickles (with positive and negative point 
 clouds for each anchor point cloud) and evaluation pickles. Training pickle format is optimized and different from the 
