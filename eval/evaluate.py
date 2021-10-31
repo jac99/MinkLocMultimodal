@@ -64,11 +64,11 @@ def evaluate_dataset(model, device, params, database_sets, query_sets, log=False
 
     model.eval()
 
-    for set in database_sets:
-        database_embeddings.append(get_latent_vectors(model, set, device, params, silent=silent))
+    for set in tqdm.tqdm(database_sets, disable=silent):
+        database_embeddings.append(get_latent_vectors(model, set, device, params))
 
-    for set in query_sets:
-        query_embeddings.append(get_latent_vectors(model, set, device, params, silent=silent))
+    for set in tqdm.tqdm(query_sets, disable=silent):
+        query_embeddings.append(get_latent_vectors(model, set, device, params))
 
     for i in tqdm.tqdm(range(len(query_sets)), disable=silent):
         for j in range(len(query_sets)):
@@ -115,7 +115,7 @@ def load_data_item(file_name, params):
     return result
 
 
-def get_latent_vectors(model, set, device, params, silent=True):
+def get_latent_vectors(model, set, device, params):
     # Adapted from original PointNetVLAD code
 
     if DEBUG:
@@ -124,7 +124,7 @@ def get_latent_vectors(model, set, device, params, silent=True):
 
     model.eval()
     embeddings_l = []
-    for elem_ndx in tqdm.tqdm(set, disable=silent):
+    for elem_ndx in set:
         x = load_data_item(set[elem_ndx]["query"], params)
 
         with torch.no_grad():
