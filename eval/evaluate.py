@@ -21,13 +21,8 @@ from datasets.augmentation import ValRGBTransform
 DEBUG = False
 
 
-def evaluate(model, device, params, log=False, silent=True):
+def evaluate(model, device, params, silent=True):
     # Run evaluation on all eval datasets
-
-    if DEBUG:
-        params.eval_database_files = params.eval_database_files[0:1]
-        params.eval_query_files = params.eval_query_files[0:1]
-
     assert len(params.eval_database_files) == len(params.eval_query_files)
 
     stats = {}
@@ -46,13 +41,13 @@ def evaluate(model, device, params, log=False, silent=True):
         with open(p, 'rb') as f:
             query_sets = pickle.load(f)
 
-        temp = evaluate_dataset(model, device, params, database_sets, query_sets, log=log, silent=silent)
+        temp = evaluate_dataset(model, device, params, database_sets, query_sets, silent=silent)
         stats[location_name] = temp
 
     return stats
 
 
-def evaluate_dataset(model, device, params, database_sets, query_sets, log=False, silent=True):
+def evaluate_dataset(model, device, params, database_sets, query_sets, silent=True):
     # Run evaluation on a single dataset
     recall = np.zeros(25)
     count = 0
@@ -75,7 +70,7 @@ def evaluate_dataset(model, device, params, database_sets, query_sets, log=False
             if i == j:
                 continue
             pair_recall, pair_similarity, pair_opr = get_recall(i, j, database_embeddings, query_embeddings, query_sets,
-                                                                database_sets, log=log)
+                                                                database_sets)
             recall += np.array(pair_recall)
             count += 1
             one_percent_recall.append(pair_opr)
@@ -156,7 +151,7 @@ def get_latent_vectors(model, set, device, params):
     return embeddings
 
 
-def get_recall(m, n, database_vectors, query_vectors, query_sets, database_sets, log=False):
+def get_recall(m, n, database_vectors, query_vectors, query_sets, database_sets):
     # Original PointNetVLAD code
     database_output = database_vectors[m]
     queries_output = query_vectors[n]
@@ -181,47 +176,6 @@ def get_recall(m, n, database_vectors, query_vectors, query_sets, database_sets,
             continue
         num_evaluated += 1
         distances, indices = database_nbrs.query(np.array([queries_output[i]]), k=num_neighbors)
-        if log:
-            # Log false positives (returned as the first element) for Oxford dataset
-            # Check if there's a false positive returned as the first element
-            if query_details['query'][:6] == 'oxford' and indices[0][0] not in true_neighbors:
-                fp_ndx = indices[0][0]
-                fp = database_sets[m][fp_ndx]  # Database element: {'query': path, 'northing': , 'easting': }
-                fp_emb_dist = distances[0, 0]  # Distance in embedding space
-                fp_world_dist = np.sqrt((query_details['northing'] - fp['northing']) ** 2 +
-                                        (query_details['easting'] - fp['easting']) ** 2)
-                # Find the first true positive
-                tp = None
-                for k in range(len(indices[0])):
-                    if indices[0][k] in true_neighbors:
-                        closest_pos_ndx = indices[0][k]
-                        tp = database_sets[m][closest_pos_ndx]  # Database element: {'query': path, 'northing': , 'easting': }
-                        tp_emb_dist = distances[0][k]
-                        tp_world_dist = np.sqrt((query_details['northing'] - tp['northing']) ** 2 +
-                                                (query_details['easting'] - tp['easting']) ** 2)
-                        break
-
-                with open("log_fp.txt", "a") as f:
-                    s = "{}, {}, {:0.2f}, {:0.2f}".format(query_details['query'], fp['query'], fp_emb_dist, fp_world_dist)
-                    if tp is None:
-                        s += ', 0, 0, 0\n'
-                    else:
-                        s += ', {}, {:0.2f}, {:0.2f}\n'.format(tp['query'], tp_emb_dist, tp_world_dist)
-                    f.write(s)
-
-            if query_details['query'][:6] == 'oxford' and len(indices[0]) >= 5 and random.random() < 0.01:
-                # For randomly selected 1% of queries save details of 5 best matches for later visualization
-                s = "{}, ".format(query_details['query'])
-                for k in range(min(len(indices[0]), 5)):
-                    is_match = indices[0][k] in true_neighbors
-                    e_ndx = indices[0][k]
-                    e = database_sets[m][e_ndx]     # Database element: {'query': path, 'northing': , 'easting': }
-                    e_emb_dist = distances[0][k]
-                    s += ', {}, {:0.2f}, {}, '.format(e['query'], e_emb_dist, 1 if is_match else 0)
-                s += '\n'
-                out_file_name = "log_search_results.txt"
-                with open(out_file_name, "a") as f:
-                    f.write(s)
 
         for j in range(len(indices[0])):
             if indices[0][j] in true_neighbors:
@@ -252,12 +206,6 @@ if __name__ == "__main__":
     parser.add_argument('--config', type=str, required=True, help='Path to configuration file')
     parser.add_argument('--model_config', type=str, required=True, help='Path to the model-specific configuration file')
     parser.add_argument('--weights', type=str, required=False, help='Trained model weights')
-    parser.add_argument('--debug', dest='debug', action='store_true')
-    parser.set_defaults(debug=False)
-    parser.add_argument('--visualize', dest='visualize', action='store_true')
-    parser.set_defaults(visualize=False)
-    parser.add_argument('--log', dest='log', action='store_true')
-    parser.set_defaults(log=False)
 
     args = parser.parse_args()
     print('Config path: {}'.format(args.config))
@@ -267,9 +215,6 @@ if __name__ == "__main__":
     else:
         w = args.weights
     print('Weights: {}'.format(w))
-    print('Debug mode: {}'.format(args.debug))
-    print('Visualize: {}'.format(args.visualize))
-    print('Log search results: {}'.format(args.log))
     print('')
 
     params = MinkLocParams(args.config, args.model_config)
@@ -289,6 +234,6 @@ if __name__ == "__main__":
 
     model.to(device)
 
-    stats = evaluate(model, device, params, args.log, silent=False)
+    stats = evaluate(model, device, params, silent=False)
     print_eval_stats(stats)
 

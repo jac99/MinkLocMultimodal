@@ -272,8 +272,9 @@ def do_train(dataloaders, params: MinkLocParams, debug=False):
 
     # Evaluate the final model
     model.eval()
-    final_eval_stats = evaluate(model, device, params)
-    print('Final model:')
+    print('Evaluating the final model...')
+    final_eval_stats = evaluate(model, device, params, silent=False)
+    print('Final model results:')
     print_eval_stats(final_eval_stats)
     stats['eval'] = {'final': final_eval_stats}
     print('')
