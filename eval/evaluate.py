@@ -104,7 +104,9 @@ def load_data_item(file_name, params):
 
     if params.use_rgb:
         # Get the first closest image for each LiDAR scan
-        img = image4lidar(file_name, params.image_path, '.png', params.lidar2image_ndx, k=1)
+        lidar2image_ndx = pickle.load(open(params.lidar2image_ndx_path, 'rb'))
+        assert os.path.exists(f"Cannot find lidar2image_ndx pickle: {lidar2image_ndx}")
+        img = image4lidar(file_name, params.image_path, '.png', lidar2image_ndx, k=1)
         transform = ValRGBTransform()
         # Convert to tensor and normalize
         result['image'] = transform(img)

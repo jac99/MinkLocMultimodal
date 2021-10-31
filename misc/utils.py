@@ -151,7 +151,7 @@ class MinkLocParams:
         print('Parameters:')
         param_dict = vars(self)
         for e in param_dict:
-            if e not in ['model_params', 'lidar2image_ndx']:
+            if e not in ['model_params']:
                 print('{}: {}'.format(e, param_dict[e]))
 
         if self.model_params is not None:
