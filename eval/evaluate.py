@@ -11,6 +11,7 @@ import argparse
 import torch
 import MinkowskiEngine as ME
 import random
+import tqdm
 
 from misc.utils import MinkLocParams
 from models.model_factory import model_factory
@@ -20,7 +21,7 @@ from datasets.augmentation import ValRGBTransform
 DEBUG = False
 
 
-def evaluate(model, device, params, log=False):
+def evaluate(model, device, params, log=False, silent=True):
     # Run evaluation on all eval datasets
 
     if DEBUG:
@@ -45,13 +46,13 @@ def evaluate(model, device, params, log=False):
         with open(p, 'rb') as f:
             query_sets = pickle.load(f)
 
-        temp = evaluate_dataset(model, device, params, database_sets, query_sets, log=log)
+        temp = evaluate_dataset(model, device, params, database_sets, query_sets, log=log, silent=silent)
         stats[location_name] = temp
 
     return stats
 
 
-def evaluate_dataset(model, device, params, database_sets, query_sets, log=False):
+def evaluate_dataset(model, device, params, database_sets, query_sets, log=False, silent=True):
     # Run evaluation on a single dataset
     recall = np.zeros(25)
     count = 0
@@ -64,12 +65,12 @@ def evaluate_dataset(model, device, params, database_sets, query_sets, log=False
     model.eval()
 
     for set in database_sets:
-        database_embeddings.append(get_latent_vectors(model, set, device, params))
+        database_embeddings.append(get_latent_vectors(model, set, device, params, silent=silent))
 
     for set in query_sets:
-        query_embeddings.append(get_latent_vectors(model, set, device, params))
+        query_embeddings.append(get_latent_vectors(model, set, device, params, silent=silent))
 
-    for i in range(len(query_sets)):
+    for i in tqdm.tqdm(range(len(query_sets)), disable=silent):
         for j in range(len(query_sets)):
             if i == j:
                 continue
@@ -114,7 +115,7 @@ def load_data_item(file_name, params):
     return result
 
 
-def get_latent_vectors(model, set, device, params):
+def get_latent_vectors(model, set, device, params, silent=True):
     # Adapted from original PointNetVLAD code
 
     if DEBUG:
@@ -123,7 +124,7 @@ def get_latent_vectors(model, set, device, params):
 
     model.eval()
     embeddings_l = []
-    for elem_ndx in set:
+    for elem_ndx in tqdm.tqdm(set, disable=silent):
         x = load_data_item(set[elem_ndx]["query"], params)
 
         with torch.no_grad():
@@ -288,6 +289,6 @@ if __name__ == "__main__":
 
     model.to(device)
 
-    stats = evaluate(model, device, params, args.log)
+    stats = evaluate(model, device, params, args.log, silent=False)
     print_eval_stats(stats)
 
