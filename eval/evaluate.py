@@ -10,7 +10,6 @@ import os
 import argparse
 import torch
 import MinkowskiEngine as ME
-import random
 import tqdm
 
 from misc.utils import MinkLocParams
