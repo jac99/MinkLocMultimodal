@@ -41,7 +41,7 @@ Code was tested using Python 3.8 with PyTorch 1.9.1 and MinkowskiEngine 0.5.4 on
 The following Python packages are required:
 * PyTorch (version 1.9.1)
 * MinkowskiEngine (version 0.5.4)
-* pytorch_metric_learning (version 0.9.99 or above)
+* pytorch_metric_learning (version 1.0 or above)
 * tensorboard
 * colour_demosaicing
 
