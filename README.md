@@ -100,6 +100,8 @@ See dataset website for details ([link](https://robotcar-dataset.robots.ox.ac.uk
 After downloading Oxford RobotCar dataset, run ```generate_rgb_for_lidar.py``` script.
 The script finds 20 closest RGB images in RobotCar dataset for each 3D point cloud, downsamples them and saves them in the target directory 
 (_image_path_ parameter in ```config_baseline_multimodal.txt```).
+Alternatively you can download pre-processed and downsampled RobotCar images from this 
+([link](https://drive.google.com/file/d/1fnpBW57LVLZxOZU5-dSnuwfdwbfNyxGg/view?usp=share_link)).
 During the training an input to the network consists of a 3D point cloud and one RGB image randomly chosen 
 from these 20 corresponding images.
 During the evaluation, a network input consists of a 3D point cloud and one RGB image with the closest timestamp.
