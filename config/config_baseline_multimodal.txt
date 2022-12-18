@@ -27,3 +27,4 @@ normalize_embeddings = False
 margin = 0.2
 
 train_file = training_queries_baseline.pickle
+val_file = test_queries_baseline.pickle
