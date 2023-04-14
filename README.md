@@ -112,7 +112,7 @@ python generate_rgb_for_lidar.py --config ../config/config_baseline_multimodal.t
 ```
 
 Alternatively you can download pre-processed and downsampled RobotCar images from this 
-[link](https://drive.google.com/file/d/1fnpBW57LVLZxOZU5-dSnuwfdwbfNyxGg/view?usp=share_link).
+[link](https://drive.google.com/file/d/1jso-Ku7Ip69DVPIjGUTldLf2R4bqdVZD/view?usp=share_link).
 
 ### Training
 
