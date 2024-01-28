@@ -111,8 +111,8 @@ cd scripts/
 python generate_rgb_for_lidar.py --config ../config/config_baseline_multimodal.txt --oxford_root <path_to_Oxford_RobotCar_dataset>
 ```
 
-Alternatively you can download pre-processed and downsampled RobotCar images from this 
-[link](https://drive.google.com/file/d/1jso-Ku7Ip69DVPIjGUTldLf2R4bqdVZD/view?usp=share_link).
+Alternatively you can download pre-processed and downsampled RobotCar images from this
+[link](https://drive.google.com/file/d/1g6nWvJ-T-M41MyZTa0oRHIwP7G-cxer6/view?usp=sharing).
 
 ### Training
 
